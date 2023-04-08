@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "429610259119",
+    "project_id": "emotional-chat-e4ced",
+    "storage_bucket": "emotional-chat-e4ced.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429610259119:android:df90790d1641d897ac3a5a",
+        "android_client_info": {
+          "package_name": "com.example.emotional_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "429610259119-eghohdgaodic6h0r2orr3gk34ak131et.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUcvSMWbEN1XqqPBR6VCidmjJWYcTohRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "429610259119-eghohdgaodic6h0r2orr3gk34ak131et.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
