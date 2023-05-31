@@ -6,6 +6,8 @@ import '../bottomnav_bar.dart';
 import '../group_details.dart';
 import '../snack_bar.dart';
 import 'message_bubble.dart';
+import 'package:sentiment_dart/sentiment_dart.dart';
+import "package:translator/translator.dart";
 
 class ChatPage extends StatefulWidget {
   final String groupId;
@@ -24,12 +26,12 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final translator = GoogleTranslator();
   Stream<QuerySnapshot>? chats;
   TextEditingController messageController = TextEditingController();
   String admin = "";
   bool sendButton = false;
   bool emojiShowing = false;
-
   String lastMessage = "";
 
   @override
@@ -135,7 +137,7 @@ class _ChatPageState extends State<ChatPage> {
             icon: const Icon(Icons.call),
             tooltip: 'ARAMA',
             onPressed: () {
-              mySnackBar(context, "ARAMA YAPILCAK EMIN MISIN?");
+              mySnackBar(context, "Arama Yapılıyor..");
             },
           ),
         ],
@@ -293,6 +295,8 @@ class _ChatPageState extends State<ChatPage> {
                             snapshot.data.docs[index]['sender'],
                         lastSender: snapshot.data.docs[index - 1]['sender'],
                         time: snapshot.data.docs[index]['time'],
+                        sentimentOutput: analyzeMessage(
+                            snapshot.data.docs[index]['message']),
                       );
                     } else {
                       return MessageBubble(
@@ -302,6 +306,8 @@ class _ChatPageState extends State<ChatPage> {
                             snapshot.data.docs[index]['sender'],
                         lastSender: "",
                         time: snapshot.data.docs[index]['time'],
+                        sentimentOutput: analyzeMessage(
+                            snapshot.data.docs[index]['message']),
                       );
                     }
                   } else {
@@ -314,6 +320,8 @@ class _ChatPageState extends State<ChatPage> {
                               snapshot.data.docs[index]['sender'],
                           lastSender: snapshot.data.docs[index - 1]['sender'],
                           time: snapshot.data.docs[index]['time'],
+                          sentimentOutput: analyzeMessage(
+                              snapshot.data.docs[index]['message']),
                         );
                       } else {
                         return MessageBubble(
@@ -323,6 +331,8 @@ class _ChatPageState extends State<ChatPage> {
                               snapshot.data.docs[index]['sender'],
                           lastSender: "",
                           time: snapshot.data.docs[index]['time'],
+                          sentimentOutput: analyzeMessage(
+                              snapshot.data.docs[index]['message']),
                         );
                       }
                     } else {
@@ -353,9 +363,10 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  // chatMessagesCount() {
-  //   if()
-  // }
+  SentimentResult analyzeMessage(String message) {
+    var analysis = Sentiment.analysis(message, emoji: true);
+    return analysis;
+  }
 }
 
 final ScrollController _controller = ScrollController();

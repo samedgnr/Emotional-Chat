@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-
+import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:intl/intl.dart';
-
 import '../../shared/local_parameters.dart';
 
 class MessageBubble extends StatefulWidget {
@@ -13,12 +12,14 @@ class MessageBubble extends StatefulWidget {
     required this.sentByMe,
     required this.lastSender,
     required this.time,
+    required this.sentimentOutput,
   }) : super(key: key);
   final String message;
   final String sender;
   final bool sentByMe;
   final String lastSender;
   final int time;
+  final SentimentResult sentimentOutput;
 
   @override
   State<MessageBubble> createState() => _MessageBubbleState();
@@ -86,15 +87,21 @@ class _MessageBubbleState extends State<MessageBubble> {
     }
   }
 
-  whoSendIt(
-    BuildContext context,
-  ) {
+  whoSendIt(BuildContext context) {
     Color color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
     if (!widget.sentByMe) {
       if (widget.sender == widget.lastSender) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                sentilizerOutput,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: widget.sentByMe ? Colors.white : Colors.black87),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(12),
               child: Text(
@@ -131,6 +138,14 @@ class _MessageBubbleState extends State<MessageBubble> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
               child: Text(
+                sentilizerOutput,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: widget.sentByMe ? Colors.white : Colors.black87),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
                 widget.message,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: widget.sentByMe ? Colors.white : Colors.black87),
@@ -152,6 +167,14 @@ class _MessageBubbleState extends State<MessageBubble> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              sentilizerOutput,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: widget.sentByMe ? Colors.white : Colors.black87),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Text(
@@ -195,5 +218,25 @@ class _MessageBubbleState extends State<MessageBubble> {
     }
 
     return time;
+  }
+
+  String get sentilizerOutput {
+    if (widget.sentimentOutput.score > 0) {
+      return "Positive";
+    } else if ((widget.sentimentOutput.score < 0)) {
+      return "Negative";
+    } else {
+      return "Neutral";
+    }
+  }
+
+  String get emojiOutput {
+    if (widget.sentimentOutput.score > 0) {
+      return "assets/images/happy.png";
+    } else if ((widget.sentimentOutput.score < 0)) {
+      return "assets/images/sad.png";
+    } else {
+      return "assets/images/neutral.png";
+    }
   }
 }
