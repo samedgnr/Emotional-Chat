@@ -221,22 +221,17 @@ class _MessageBubbleState extends State<MessageBubble> {
   }
 
   String get sentilizerOutput {
-    if (widget.sentimentOutput.score > 0) {
-      return "Positive";
-    } else if ((widget.sentimentOutput.score < 0)) {
-      return "Negative";
+    var compr = widget.sentimentOutput.comparative;
+    if (compr > 1) {
+      return "Very Positive 😀";
+    } else if ((compr > 0)) {
+      return "Positive 🙂";
+    } else if ((compr > -1 && compr < 0)) {
+      return "Negative 🙁";
+    } else if ((compr < -1)) {
+      return "Very Negative 😢";
     } else {
-      return "Neutral";
-    }
-  }
-
-  String get emojiOutput {
-    if (widget.sentimentOutput.score > 0) {
-      return "assets/images/happy.png";
-    } else if ((widget.sentimentOutput.score < 0)) {
-      return "assets/images/sad.png";
-    } else {
-      return "assets/images/neutral.png";
+      return "Neutral 😐";
     }
   }
 }

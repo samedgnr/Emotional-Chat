@@ -33,6 +33,22 @@ class _ChatPageState extends State<ChatPage> {
   bool sendButton = false;
   bool emojiShowing = false;
   String lastMessage = "";
+  late String engText;
+
+  translate(text) {
+    try {
+      translator.translate(text, from: "tr", to: "en").then((value) {
+        print(value.text);
+        setState(() {
+          engText = value.text;
+          analyzeMessage(engText);
+        });
+      });
+    } catch (e) {
+      print(e);
+      analyzeMessage(text);
+    }
+  }
 
   @override
   void initState() {

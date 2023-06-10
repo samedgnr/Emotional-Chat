@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../helper/helper_function.dart';
 import '../../services/auth_service.dart';
 import '../../shared/local_parameters.dart';

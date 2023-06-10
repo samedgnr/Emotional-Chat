@@ -51,6 +51,7 @@ dependencies:
   translator:
   flutter:
     sdk: flutter
+  google_translator: ^1.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
